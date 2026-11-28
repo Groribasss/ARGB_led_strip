@@ -17,9 +17,9 @@ void pwm_config_tim2() {
 	TIM2->CR1 &= ~(TIM_CR1_ARPE);
 
 	TIM2->PSC = 0;
-	TIM2->ARR = 1199;
+	TIM2->ARR = 599;
 	TIM2->CNT = 0;
-	TIM2->CCR2 = 600;
+	TIM2->CCR2 = 300;
 
 	TIM2->CCER &= ~(TIM_CCER_CC2P);
 	TIM2->CCER |= TIM_CCER_CC2E;

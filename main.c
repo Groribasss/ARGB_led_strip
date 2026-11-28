@@ -3,8 +3,8 @@
 #include "PWM.h"
 
 int main(void) {
-	SystemClock_Config();
-	pwm_config_tim2();
+	SystemClock_Config(); // now its making 12 MHz
+	pwm_config_tim2(); // TIM2 CH2 PWM Init
 	PWM_Start();
 
 	while(1) {
