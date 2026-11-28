@@ -13,28 +13,28 @@ MCU = -mcpu=cortex-m3 -mthumb
 C_DEFS = -DSTM32F103xB
 
 C_INCLUDES = \
--CMSIS/ARM \
--CMSIS/STM32F1xx/Include \
--modules/Include
+-ICMSIS/ARM \
+-ICMSIS/STM32F1xx/Include \
+-Imodules/Include
 
 CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) -O0 -Wall -fdata-sections -ffunction-sections -g -gdwarf-2
 
 LDSCRIPT = STM32F103XB_FLASH.ld
-LDFLAGS = $(MCU) -T$(LDSCRIPT) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--gcc-sections --specs=nano.specs
+LDFLAGS = $(MCU) -T$(LDSCRIPT) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--gc-sections --specs=nano.specs
 
 C_SOURCES = \
--src/main.c \
--CMSIS/STM32F1xx/Source/system_stm32f1xx.c \
--modules/Source/PWM.c \
--modules/Source/User.c
+src/main.c \
+CMSIS/STM32F1xx/Source/system_stm32f1xx.c \
+modules/Source/PWM.c \
+modules/Source/User.c
 
 ASM_SOURCES = \
--CMSIS/STM32F1xx/Source/startup_stm32f103xb.s
+CMSIS/STM32F1xx/Source/startup_stm32f103xb.s
 
 OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o)))
 vpath %.c $(sort $(dir $(C_SOURCES)))
 
-OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
+OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
 vpath %.s $(sort $(dir $(ASM_SOURCES)))
 
 all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
